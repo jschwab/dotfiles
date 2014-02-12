@@ -1,23 +1,27 @@
 --
--- xmonad example config file.
+-- xmonad config file on monolith
 --
--- A template showing all available configuration hooks,
--- and how to override the defaults in your own xmonad.hs conf file.
---
--- Normally, you'd only override those defaults you care about.
---
+
+-- suggested for grid select
+{-# LANGUAGE NoMonomorphismRestriction #-}
+-- Imports.
 
 import XMonad
 import Data.Monoid
 import System.Exit
 
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.Place
+import XMonad.Actions.CycleWS
+import XMonad.Actions.GridSelect
+import XMonad.Actions.PhysicalScreens
+import XMonad.Actions.UpdatePointer
+
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
--- The preferred terminal program, which is used in a binding below and by
--- certain contrib modules.
---
-myTerminal      = "xterm"
+myTerminal = "xterm"
+myDmenuCommand = "dmenu_run -fn \"Dejavu Sans Mono-12\""
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -27,32 +31,43 @@ myFocusFollowsMouse = True
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
--- Width of the window border in pixels.
---
 myBorderWidth   = 1
 
--- modMask lets you specify which modkey you want to use. The default
--- is mod1Mask ("left alt").  You may also consider using mod3Mask
--- ("right alt"), which does not conflict with emacs keybindings. The
--- "windows key" is usually mod4Mask.
---
-myModMask       = mod1Mask
+myModMask       = mod4Mask
 
--- The default number of workspaces (virtual screens) and their names.
--- By default we use numeric strings, but any string may be used as a
--- workspace name. The number of workspaces is determined by the length
--- of this list.
---
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces = ["1:todo","2:mail","3:web"] ++ map show ([4..9] ++ [0])
 
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
+
+-- set up navigation for grid select
+myNavigation :: TwoD a (Maybe a)
+myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
+ where navKeyMap = M.fromList [
+          ((0,xK_Escape), cancel)
+         ,((0,xK_Return), select)
+         ,((0,xK_slash) , substringSearch myNavigation)
+         ,((0,xK_Left)  , move (-1,0)  >> myNavigation)
+         ,((0,xK_j)     , move (-1,0)  >> myNavigation)
+         ,((0,xK_Right) , move (1,0)   >> myNavigation)
+         ,((0,xK_l)     , move (1,0)   >> myNavigation)
+         ,((0,xK_Down)  , move (0,1)   >> myNavigation)
+         ,((0,xK_k)     , move (0,1)   >> myNavigation)
+         ,((0,xK_Up)    , move (0,-1)  >> myNavigation)
+         ,((0,xK_i)     , move (0,-1)  >> myNavigation)
+         ,((0,xK_space) , setPos (0,0) >> myNavigation)
+         ]
+
+-- The navigation handler ignores unknown key symbols
+navDefaultHandler = const myNavigation
+
+myGSConfig = defaultGSConfig { gs_navigate = myNavigation
+                             , gs_cellwidth = 200
+                             , gs_font = "xft:Deja Vu Sans Mono-11"
+                               }
+
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -63,10 +78,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "dmenu_run")
+    , ((modm,               xK_p     ), spawn myDmenuCommand)
 
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    -- fire up grid select
+    , ((modm,               xK_g     ), goToSelected myGSConfig)
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -116,29 +131,32 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
-    -- Toggle the status bar gap
-    -- Use this binding with avoidStruts from Hooks.ManageDocks.
-    -- See also the statusBar function from Hooks.DynamicLog.
-    --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    -- some commands from my old config
+    , ((modm              , xK_a)     , onPrevNeighbour W.view)
+    , ((modm              , xK_o)     , onNextNeighbour W.view)
+    , ((modm .|. shiftMask, xK_a)     , onPrevNeighbour W.shift)
+    , ((modm .|. shiftMask, xK_o)     , onNextNeighbour W.shift)
+    , ((modm              , xK_Right) , nextWS)
+    , ((modm              , xK_Left)  , prevWS)
 
+    -- Lock screen
+    , ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command -lock")
+      
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
-    -- Run xmessage with a summary of the default keybindings (useful for beginners)
-    , ((modMask .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     ]
     ++
 
     --
-    -- mod-[1..9], Switch to workspace N
-    -- mod-shift-[1..9], Move client to workspace N
+    -- mod-[:digit:], Switch to workspace N
+    -- mod-shift-[:digit:], Move client to workspace N
     --
     [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
 
@@ -211,10 +229,15 @@ myLayout = tiled ||| Mirror tiled ||| Full
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+               [ title =? "PGPLOT Server" --> doIgnore
+               , title =? "PGPLOT Window 1" --> doFloat
+               , title =? "PGPLOT Window 2" --> doFloat
+               , title =? "PGPLOT Window 3" --> doFloat
+               , title =? "PGPLOT Window 4" --> doFloat
+               , title =? "Welcome to Wolfram Mathematica 9" --> doFloat
+               , className =? "Display" --> doFloat
+               , title =? "Pledge" --> doFloat
+               ]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -233,7 +256,7 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = return ()
+myLogHook = updatePointer (Relative 0.95 0.95)
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -246,11 +269,32 @@ myLogHook = return ()
 myStartupHook = return ()
 
 ------------------------------------------------------------------------
+
+myPlacement = simpleSmart
+------------------------------------------------------------------------
+
+-- Command to launch the bar.
+myBar = "xmobar"
+
+-- Custom PP, configure it as you like. It determines what is being written to the bar.
+myPP = xmobarPP { ppCurrent = xmobarColor "green" "black" . wrap "" ""
+                , ppVisible = xmobarColor "yellow" "black" . wrap "" ""
+                , ppHidden = xmobarColor "white" "black" . wrap "" ""
+                , ppHiddenNoWindows = xmobarColor "red" "black" . wrap "" ""
+                , ppOrder = \(ws:l:t:_)   -> [ws]
+--                , ppSort    = getSortByXineramaRule
+                }
+
+-- Key binding to toggle the gap for the bar.
+
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
+------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -275,7 +319,7 @@ defaults = defaultConfig {
 
       -- hooks, layouts
         layoutHook         = myLayout,
-        manageHook         = myManageHook,
+        manageHook         = placeHook myPlacement <+> myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
