@@ -1,0 +1,20 @@
+#!/bin/bash
+
+OLDFILE=$HOME/$1
+NEWFILE=$HOME/dotfiles/${1#.}
+
+if [ -e $OLDFILE ]; then 
+
+    # move it to the dotfiles directory
+    cp $OLDFILE $NEWFILE
+
+    # add it to the git repo
+    git add $NEWFILE
+    git commit -m "imported $1"
+    echo "don't forget to proofread before pushing"
+
+    # replace the file with a symlink
+    rm -i $OLDFILE
+    ln -s $NEWFILE $OLDFILE
+
+fi
