@@ -1,0 +1,26 @@
+Config { font = "xft:Deja Vu Sans Mono-11"
+       , bgColor = "black"
+       , fgColor = "white"
+       , position = Top
+       , lowerOnStart = True
+       , commands = [ Run StdinReader
+                    , Run Cpu ["-t", "<total>%","-p","2","-L","3","-H","50","--normal","green","--high","red"] 60
+                    , Run Memory ["-t", "<usedratio>%","-p","2"] 60
+                    , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run Battery  ["-t", "<acstatus><left>% (<timeleft>)",
+                                   "-L", "10", "-H", "80", "-p", "3",
+                                   "--", "-O", "AC", "-i", "AC", "-o", "BAT",
+                                   "-L", "-15", "-H", "-5",
+                                   "-l", "red", "-m", "blue", "-h", "green"]
+                                   60
+                    , Run Date "%a %d %b %Y %H:%M" "date" 60
+                    , Run Brightness ["-t", "<percent>%", "-p", "2"] 60
+                    , Run Locks
+                    , Run Com "/home/jschwab/scripts/unread_count" [] "unread_count" 600
+                    , Run Com "/home/jschwab/scripts/unsent_count" [] "unsent_count" 600
+                    , Run Com "/home/jschwab/scripts/get_volume" [] "volume" 60
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ %uname% | %locks% | N:%unread_count% Q:%unsent_count% | C:%cpu% M:%memory% | B:%bright% V:%volume% | %battery% | <fc=#ee9a00>%date%</fc> |       "
+       }
