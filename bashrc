@@ -7,8 +7,9 @@
 
 # change how bash prompt appears
 source /usr/share/git/git-prompt.sh
+source /home/jschwab/Software/mesasdk-init/mesa_init.sh
 export PROMPT_DIRTRIM=2
-PS1='\[\033]0;\w\007\]\h:$(__git_ps1 "(%s)") \W$ '
+PS1='\[\033]0;\w\007\]$(__mesa_ps1)\h:$(__git_ps1 "(%s)") \W$ '
 
 # basic command tweaks
 alias ls='ls --color=auto'
@@ -38,8 +39,9 @@ export PATH=$PATH:/opt/Wolfram/bin
 # add scripts directory
 export PATH=$PATH:/home/jschwab/scripts
 
-# look for python modules in the 
+# look for python modules in my software directory
 export PYTHONPATH=/home/jschwab/Software/:$PYTHONPATH
+export PYTHONPATH=/home/jschwab/Software/elpy/:$PYTHONPATH
 
 # this is a quad-core machine
 export OMP_NUM_THREADS=4
@@ -48,8 +50,9 @@ export OMP_NUM_THREADS=4
 export MESA_DIR=/home/jschwab/Software/mesa
 export MESASDK_ROOT=/opt/mesasdk
 
-alias activatemesasdk="source $MESASDK_ROOT/bin/mesasdk_init.sh"
-alias mkworkdir="cp -r $MESA_DIR/star/work"
+activatemesasdk () {
+    source /home/jschwab/Software/mesasdk-init/mesasdk_init.sh
+}
 
 # convinient emacs aliases
 alias ec="emacsclient -n -c"
@@ -76,6 +79,11 @@ cdrp(){
 # quickly go to puzzle directory
 cddc(){
     cd /home/jschwab/Puzzling/BerkeleyHunt/2014/hunt2014/dailycal/spring
+}
+
+# quickly go to puzzle directory
+cdhunt(){
+    cd /home/jschwab/Puzzling/BerkeleyHunt/2014/hunt2014/website
 }
 
 # for msmtpq
