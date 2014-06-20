@@ -11,8 +11,26 @@ source /home/jschwab/Software/mesasdk-init/mesa_init.sh
 export PROMPT_DIRTRIM=2
 PS1='\[\033]0;\w\007\]$(__mesa_ps1)\h:$(__git_ps1 "(%s)") \W$ '
 
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=10000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
 # basic command tweaks
 alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 alias rm='rm -I'
 
 # add shortcuts for frequent ssh targets
@@ -99,3 +117,8 @@ export INFOPATH=/home/jschwab/Software/org-mode/doc:$INFOPATH
 alias reboot="sudo systemctl reboot"
 alias poweroff="sudo systemctl poweroff"
 alias halt="sudo systemctl halt"
+
+# alias for pacman
+search() {
+  aura -Ss $1 && aura -As $1
+}
