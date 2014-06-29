@@ -1,0 +1,41 @@
+# Sample minimal config file.  Copy this to ~/.offlineimaprc and edit to
+# get started fast.
+
+[general]
+accounts = personal, berkeley
+pythonfile = ~/.offlineimap.py
+maxsyncaccounts = 2
+
+[Account personal]
+localrepository = personal-local
+remoterepository = personal-remote
+status_backend = sqlite
+
+[Repository personal-local]
+type = Maildir
+localfolders = ~/Mail/personal
+
+[Repository personal-remote]
+type = Gmail
+remoteusereval = get_username('personal')
+remotepasseval = get_password('personal')
+maxconnections = 2
+usecompression = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+[Account berkeley]
+localrepository = berkeley-local
+remoterepository = berkeley-remote
+status_backend = sqlite
+
+[Repository berkeley-local]
+type = Maildir
+localfolders = ~/Mail/berkeley
+
+[Repository berkeley-remote]
+type = Gmail
+remoteusereval = get_username('berkeley')
+remotepasseval = get_password('berkeley')
+maxconnections = 2
+usecompression = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
