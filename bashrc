@@ -19,6 +19,7 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# http://stackoverflow.com/questions/19454837/bash-histsize-vs-histfilesize
 HISTSIZE=1000
 HISTFILESIZE=10000
 
