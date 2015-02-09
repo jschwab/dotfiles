@@ -11,11 +11,14 @@ import Data.Monoid
 import System.Exit
 
 import XMonad.Hooks.DynamicLog
+
 import XMonad.Hooks.Place
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.UpdatePointer
+
+import XMonad.Util.Scratchpad
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -138,6 +141,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_o)     , onNextNeighbour W.shift)
     , ((modm              , xK_Right) , nextWS)
     , ((modm              , xK_Left)  , prevWS)
+    , ((modm,               xK_z)     , toggleWS)
+
+    -- make a scratchpad terminal  
+    , ((modm                    ,xK_d), scratchpadSpawnActionTerminal myTerminal)
 
     -- Lock screen
     , ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command -lock")
@@ -238,6 +245,7 @@ myManageHook = composeAll
                , className =? "Display" --> doFloat
                , title =? "Pledge" --> doFloat
                ]
+               <+> scratchpadManageHookDefault
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -282,7 +290,7 @@ myPP = xmobarPP { ppCurrent = xmobarColor "green" "black" . wrap "" ""
                 , ppHidden = xmobarColor "white" "black" . wrap "" ""
                 , ppHiddenNoWindows = xmobarColor "red" "black" . wrap "" ""
                 , ppOrder = \(ws:l:t:_)   -> [ws]
---                , ppSort    = getSortByXineramaRule
+                , ppSort = fmap (.scratchpadFilterOutWorkspace) $ ppSort xmobarPP
                 }
 
 -- Key binding to toggle the gap for the bar.
@@ -319,7 +327,7 @@ defaults = defaultConfig {
 
       -- hooks, layouts
         layoutHook         = myLayout,
-        manageHook         = placeHook myPlacement <+> myManageHook,
+        manageHook         = myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
