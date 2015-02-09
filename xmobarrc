@@ -19,8 +19,9 @@ Config { font = "xft:Deja Vu Sans Mono-11"
                     , Run Com "/home/jschwab/scripts/unread_count" [] "unread_count" 600
                     , Run Com "/home/jschwab/scripts/unsent_count" [] "unsent_count" 600
                     , Run Com "/home/jschwab/scripts/get_volume" [] "volume" 60
+                    , Run Com "/home/jschwab/scripts/syncorg_status" [] "org_status" 600
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %uname% | %locks% | N:%unread_count% Q:%unsent_count% | C:%cpu% M:%memory% | B:%bright% V:%volume% | %battery% | <fc=#ee9a00>%date%</fc> |       "
+       , template = "%StdinReader% }{ %uname% | %locks% | N:%unread_count% Q:%unsent_count% O:%org_status% | C:%cpu% M:%memory% | B:%bright% V:%volume% | %battery% | <fc=#ee9a00>%date%</fc> |          "
        }
