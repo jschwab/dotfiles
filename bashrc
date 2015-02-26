@@ -34,13 +34,9 @@ alias la='ls -A'
 alias l='ls -CF'
 alias rm='rm -I'
 
-# add shortcuts for frequent ssh targets
-source ~/.server_aliases
-
 # other aliases
 alias pdfmerge="gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=merge.pdf -dBATCH"
 alias timestamp="date +%d%m%y-%H%M%S"
-alias bplcat="xterm -title 'BPLCAT' -e telnet library.berkeley-public.org &"
 alias pdb="python -m pdb"
 alias pylab="ipython --pylab"
 alias pledge="/home/jschwab/Software/McAfee/Pledge/Pledge"
@@ -50,10 +46,10 @@ alias pledge="/home/jschwab/Software/McAfee/Pledge/Pledge"
 #export PROMPT_COMMAND="history -a"
 
 # add rubygems to path
-export PATH=$PATH:/home/jschwab/.gem/ruby/2.1.0/bin
+export PATH=$PATH:/home/jschwab/.gem/ruby/2.2.0/bin
 
-# add mathematica to path
-export PATH=$PATH:/opt/Wolfram/bin
+# add cabal (haskell) to path
+export PATH=$PATH:/home/jschwab/.cabal/bin
 
 # add scripts directory
 export PATH=$PATH:/home/jschwab/scripts
@@ -61,9 +57,10 @@ export PATH=$PATH:/home/jschwab/scripts
 # look for python modules in my software directory
 export PYTHONPATH=/home/jschwab/Software/:$PYTHONPATH
 export PYTHONPATH=/home/jschwab/Software/elpy/:$PYTHONPATH
+export PYTHONPATH=/home/jschwab/Software/py_mesa_reader/:$PYTHONPATH
 
-# this is a quad-core machine
-export OMP_NUM_THREADS=4
+# this is a machine has two physical cores
+export OMP_NUM_THREADS=2
 
 # set up mesa
 export MESA_DIR=/home/jschwab/Software/mesa
@@ -97,12 +94,17 @@ cdrp(){
 
 # quickly go to puzzle directory
 cddc(){
-    cd /home/jschwab/Puzzling/BerkeleyHunt/2014/hunt2014/dailycal/spring
+    cd /home/jschwab/Puzzling/BerkeleyHunt/2015/hunt2015/dailycal/spring
 }
 
 # quickly go to puzzle directory
 cdhunt(){
-    cd /home/jschwab/Puzzling/BerkeleyHunt/2014/hunt2014/website
+    cd /home/jschwab/Puzzling/BerkeleyHunt/2015/hunt2015/website
+}
+
+# quickly go to puzzle directory
+cdmhunt(){
+    cd /home/jschwab/Puzzling/MIT/2015
 }
 
 # for msmtpq
