@@ -5,9 +5,18 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# set up mesa
+export MESA_DIR=/home/jschwab/Software/mesa
+export MESASDK_ROOT=/opt/mesasdk
+
+activatemesasdk () {
+    source /home/jschwab/Software/mesa-init/mesasdk_init.sh
+}
+
 # change how bash prompt appears
 source /usr/share/git/git-prompt.sh
-source /home/jschwab/Software/mesasdk-init/mesa_init.sh
+source /home/jschwab/Software/mesa-init/mesa_init.sh
+
 export PROMPT_DIRTRIM=2
 PS1='\[\033]0;\w\007\]$(__mesa_ps1)\h:$(__git_ps1 "(%s)") \W$ '
 
@@ -61,14 +70,6 @@ export PYTHONPATH=/home/jschwab/Software/py_mesa_reader/:$PYTHONPATH
 
 # this is a machine has two physical cores
 export OMP_NUM_THREADS=2
-
-# set up mesa
-export MESA_DIR=/home/jschwab/Software/mesa
-export MESASDK_ROOT=/opt/mesasdk
-
-activatemesasdk () {
-    source /home/jschwab/Software/mesasdk-init/mesasdk_init.sh
-}
 
 # convinient emacs aliases
 alias ec="emacsclient -n -c"
