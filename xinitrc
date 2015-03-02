@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# from /etc/skel/.xinitrc
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+
 # if it exists, use .Xresources
 if [ -s .Xresources ]; then
     xrdb -merge ~/.Xresources
@@ -11,26 +20,9 @@ setxkbmap -option ctrl:swapcaps
 # start xbindkeys
 xbindkeys
 
-# use gnome keyring without the rest of gnome desktop
-# https://wiki.archlinux.org/index.php/GNOME_Keyring#Use_Without_GNOME
-
-# Start a D-Bus session
-source /etc/X11/xinit/xinitrc.d/30-dbus
-
-# Start GNOME Keyring
-/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh > $HOME/.keyring/Gnome
-source $HOME/.keyring/Gnome
-
-# You probably need to do this too:
+# password and key management
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
-export GPG_AGENT_INFO
-export GNOME_KEYRING_CONTROL
-export GNOME_KEYRING_PID
-
-touch $HOME/.dbus/Xdbus
-chmod 600 $HOME/.dbus/Xdbus
-env | grep DBUS_SESSION_BUS_ADDRESS > $HOME/.dbus/Xdbus
-echo 'export DBUS_SESSION_BUS_ADDRESS' >> $HOME/.dbus/Xdbus
 
 # fire up the screensaver
 xscreensaver -no-splash &
