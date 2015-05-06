@@ -17,6 +17,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.UpdatePointer
+import XMonad.Actions.NoBorders
 
 import XMonad.Util.Scratchpad
 
@@ -133,6 +134,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+
+    --
+    , ((modm .|. shiftMask, xK_b     ), withFocused toggleBorder)
 
     -- some commands from my old config
     , ((modm              , xK_a)     , onPrevNeighbour W.view)
