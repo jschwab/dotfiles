@@ -1,4 +1,5 @@
-!! based off of euphrasia v2 by bohoomil
+! Fix the 'Alt' key
+XTerm*metaSendsEscape: true
 
 ! fg/bg
 *background:      #000000
@@ -20,6 +21,7 @@ emacs.font:     Dejavu Sans Mono-11
 pgxwin.server.visible: False
 
 ! black! Xft settings ---------------------------------------------------------------
+! based off of euphrasia v2 by bohoomil
 
 Xft.dpi:        96
 Xft.antialias:  true
