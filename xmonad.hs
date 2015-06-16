@@ -8,6 +8,7 @@
 
 import XMonad
 import Data.Monoid
+import Data.List
 import System.Exit
 
 import XMonad.Hooks.DynamicLog
@@ -86,7 +87,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- fire up grid select
     , ((modm,               xK_g     ), goToSelected myGSConfig)
-
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
 
@@ -241,11 +241,7 @@ myLayout = tiled ||| Mirror tiled ||| Full
 --
 myManageHook = composeAll
                [ title =? "PGPLOT Server" --> doIgnore
-               , title =? "PGPLOT Window 1" --> doFloat
-               , title =? "PGPLOT Window 2" --> doFloat
-               , title =? "PGPLOT Window 3" --> doFloat
-               , title =? "PGPLOT Window 4" --> doFloat
-               , title =? "Welcome to Wolfram Mathematica 9" --> doFloat
+               , fmap ("PGPLOT Window" `isInfixOf`) title --> doFloat
                , className =? "Display" --> doFloat
                , title =? "Pledge" --> doFloat
                ]
