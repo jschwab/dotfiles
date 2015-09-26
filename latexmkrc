@@ -7,3 +7,6 @@ $pdflatex = 'pdflatex -interaction=nonstopmode';
 
 # continuously typset and display
 $preview_continuous_mode = 1;
+
+# use evince to preview
+$pdf_previewer = 'evince';
