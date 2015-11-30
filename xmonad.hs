@@ -151,6 +151,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- make a scratchpad terminal  
     , ((modm                    ,xK_d), scratchpadSpawnActionTerminal myTerminal)
 
+    -- start/reset a pomodoro
+    , ((modm              , xK_Home  ), spawn "touch ~/.pomodoro_session")
+
+    -- kill a pomodoro
+    , ((modm              , xK_End   ), spawn "rm ~/.pomodoro_session")
+
     -- Lock screen
     , ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command -lock")
       
