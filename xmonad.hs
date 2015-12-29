@@ -271,7 +271,7 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = updatePointer (Relative 0.95 0.95)
+myLogHook = updatePointer (0.95,0.95) (1,1)
 
 ------------------------------------------------------------------------
 -- Startup hook
