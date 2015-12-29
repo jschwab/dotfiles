@@ -23,11 +23,14 @@ import XMonad.Actions.NoBorders
 
 import XMonad.Util.Scratchpad
 
+import XMonad.Prompt
+import XMonad.Prompt.Pass
+import XMonad.Prompt.Shell
+
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 myTerminal = "xterm"
-myDmenuCommand = "dmenu_run -fn \"Dejavu Sans Mono-12\""
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -73,6 +76,18 @@ myGSConfig = defaultGSConfig { gs_navigate = myNavigation
                              , gs_cellwidth = 200
                              , gs_font = "xft:Deja Vu Sans Mono-11"
                                }
+myXPConfig = defaultXPConfig
+    {
+      position = Top
+    , promptBorderWidth = 0
+    , bgColor = "Black"
+    , fgColor = "White"
+    , defaultText = []
+    , alwaysHighlight = True
+    , promptKeymap = emacsLikeXPKeymap
+    , font = "xft:Deja Vu Sans Mono-11"
+    , height = 22
+    }
 
 
 ------------------------------------------------------------------------
@@ -83,12 +98,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
-    -- launch dmenu
-    , ((modm,               xK_p     ), spawn myDmenuCommand)
+    -- launch prompt
+    , ((modm,               xK_p     ), shellPrompt myXPConfig)
 
     -- fire up grid select
     , ((modm,               xK_g     ), goToSelected myGSConfig)
-    -- close focused window
+
+      -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
 
      -- Rotate through the available layout algorithms
