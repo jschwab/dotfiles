@@ -80,11 +80,11 @@ myGSConfig = def { gs_navigate = myNavigation
 
 -- convert string to lower case
 downCase :: String -> String
-downCase s = [ toLower c | c <- s ]
+downCase = map toLower
 
 -- match on substring
-infixSearchPredicate :: String -> String -> Bool
-infixSearchPredicate s l = (downCase s) `isInfixOf` (downCase l)
+isCaseInsensitiveInfixOf :: String -> String -> Bool
+isCaseInsensitiveInfixOf s l = (downCase s) `isInfixOf` (downCase l)
 
 myXPConfig = def { position = Top
                  , promptBorderWidth = 0
@@ -95,7 +95,7 @@ myXPConfig = def { position = Top
                  , promptKeymap = emacsLikeXPKeymap
                  , font = "xft:Deja Vu Sans Mono-11"
                  , height = 22
-                 , searchPredicate = infixSearchPredicate
+                 , searchPredicate = isCaseInsensitiveInfixOf
                  }
 
 ------------------------------------------------------------------------
