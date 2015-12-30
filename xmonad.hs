@@ -7,6 +7,7 @@
 -- Imports.
 
 import XMonad
+import Data.Char (toLower)
 import Data.Monoid
 import Data.List
 import System.Exit
@@ -72,23 +73,30 @@ myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
 -- The navigation handler ignores unknown key symbols
 navDefaultHandler = const myNavigation
 
-myGSConfig = defaultGSConfig { gs_navigate = myNavigation
-                             , gs_cellwidth = 200
-                             , gs_font = "xft:Deja Vu Sans Mono-11"
-                               }
-myXPConfig = defaultXPConfig
-    {
-      position = Top
-    , promptBorderWidth = 0
-    , bgColor = "Black"
-    , fgColor = "White"
-    , defaultText = []
-    , alwaysHighlight = True
-    , promptKeymap = emacsLikeXPKeymap
-    , font = "xft:Deja Vu Sans Mono-11"
-    , height = 22
-    }
+myGSConfig = def { gs_navigate = myNavigation
+                 , gs_cellwidth = 200
+                 , gs_font = "xft:Deja Vu Sans Mono-11"
+                 }
 
+-- convert string to lower case
+downCase :: String -> String
+downCase s = [ toLower c | c <- s ]
+
+-- match on substring
+infixSearchPredicate :: String -> String -> Bool
+infixSearchPredicate s l = (downCase s) `isInfixOf` (downCase l)
+
+myXPConfig = def { position = Top
+                 , promptBorderWidth = 0
+                 , bgColor = "Black"
+                 , fgColor = "White"
+                 , defaultText = []
+                 , alwaysHighlight = True
+                 , promptKeymap = emacsLikeXPKeymap
+                 , font = "xft:Deja Vu Sans Mono-11"
+                 , height = 22
+                 , searchPredicate = infixSearchPredicate
+                 }
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -100,6 +108,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch prompt
     , ((modm,               xK_p     ), shellPrompt myXPConfig)
+
+    -- interact with pass
+    , ((modm .|. shiftMask, xK_p)                 , passPrompt myXPConfig)
+    , ((modm .|. controlMask, xK_p)               , passGeneratePrompt myXPConfig)
+    , ((modm .|. controlMask  .|. shiftMask, xK_p), passRemovePrompt myXPConfig)
 
     -- fire up grid select
     , ((modm,               xK_g     ), goToSelected myGSConfig)
@@ -164,7 +177,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_Left)  , prevWS)
     , ((modm,               xK_z)     , toggleWS)
 
-    -- make a scratchpad terminal  
+    -- make a scratchpad terminal
     , ((modm                    ,xK_d), scratchpadSpawnActionTerminal myTerminal)
 
     -- start/reset a pomodoro
@@ -175,7 +188,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Lock screen
     , ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command -lock")
-      
+
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
@@ -333,7 +346,7 @@ main = xmonad =<< statusBar myBar myPP toggleStrutsKey (ewmh defaults)
 --
 -- No need to modify this.
 --
-defaults = defaultConfig {
+defaults = def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
