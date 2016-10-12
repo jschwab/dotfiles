@@ -2,25 +2,19 @@
 -- xmonad config file on monolith
 --
 
--- suggested for grid select
-{-# LANGUAGE NoMonomorphismRestriction #-}
--- Imports.
-
 import XMonad
 import Data.Char (toLower)
+import Data.List (isInfixOf)
 import Data.Monoid
-import Data.List
 import System.Exit
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 
-import XMonad.Hooks.Place
 import XMonad.Actions.CycleWS
-import XMonad.Actions.GridSelect
+import XMonad.Actions.NoBorders
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.UpdatePointer
-import XMonad.Actions.NoBorders
 
 import XMonad.Util.Scratchpad
 
@@ -31,9 +25,12 @@ import XMonad.Prompt.Shell
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+-- The preferred terminal program, which is used in a binding below and by
+-- certain contrib modules.
+--
 myTerminal = "xterm"
 
--- Whether focus follows the mouse pointer.
+-- Whether focus follows the mouse pointer
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
@@ -41,10 +38,26 @@ myFocusFollowsMouse = True
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
-myBorderWidth   = 2
+-- Width of the window border in pixels.
+--
+myBorderWidth = 2
 
-myModMask       = mod4Mask
+-- modMask lets you specify which modkey you want to use. The default
+-- is mod1Mask ("left alt").  You may also consider using mod3Mask
+-- ("right alt"), which does not conflict with emacs keybindings. The
+-- "windows key" is usually mod4Mask.
+--
+myModMask = mod4Mask
 
+-- The default number of workspaces (virtual screens) and their names.
+-- By default we use numeric strings, but any string may be used as a
+-- workspace name. The number of workspaces is determined by the length
+-- of this list.
+--
+-- A tagging example:
+--
+-- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
+--
 myWorkspaces = ["1:todo","2:mail","3:web"] ++ map show ([4..9] ++ [0])
 
 -- Border colors for unfocused and focused windows, respectively.
@@ -52,32 +65,8 @@ myWorkspaces = ["1:todo","2:mail","3:web"] ++ map show ([4..9] ++ [0])
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
--- set up navigation for grid select
-myNavigation :: TwoD a (Maybe a)
-myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
- where navKeyMap = M.fromList [
-          ((0,xK_Escape), cancel)
-         ,((0,xK_Return), select)
-         ,((0,xK_slash) , substringSearch myNavigation)
-         ,((0,xK_Left)  , move (-1,0)  >> myNavigation)
-         ,((0,xK_j)     , move (-1,0)  >> myNavigation)
-         ,((0,xK_Right) , move (1,0)   >> myNavigation)
-         ,((0,xK_l)     , move (1,0)   >> myNavigation)
-         ,((0,xK_Down)  , move (0,1)   >> myNavigation)
-         ,((0,xK_k)     , move (0,1)   >> myNavigation)
-         ,((0,xK_Up)    , move (0,-1)  >> myNavigation)
-         ,((0,xK_i)     , move (0,-1)  >> myNavigation)
-         ,((0,xK_space) , setPos (0,0) >> myNavigation)
-         ]
-
--- The navigation handler ignores unknown key symbols
-navDefaultHandler = const myNavigation
-
-myGSConfig = def { gs_navigate = myNavigation
-                 , gs_cellwidth = 200
-                 , gs_font = "xft:Deja Vu Sans Mono-11"
-                 }
-
+-- Things for interacting with pass
+--
 -- convert string to lower case
 downCase :: String -> String
 downCase = map toLower
@@ -106,18 +95,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
-    -- launch prompt
-    , ((modm,               xK_p     ), shellPrompt myXPConfig)
+    -- launch an emacs client
+    , ((modm .|. controlMask, xK_Return), spawn "emacsclient -n -c")
 
-    -- interact with pass
-    , ((modm .|. shiftMask, xK_p)                 , passPrompt myXPConfig)
-    , ((modm .|. controlMask, xK_p)               , passGeneratePrompt myXPConfig)
-    , ((modm .|. controlMask  .|. shiftMask, xK_p), passRemovePrompt myXPConfig)
+    -- make a scratchpad terminal
+    , ((modm                    ,xK_d), scratchpadSpawnActionTerminal myTerminal)
 
-    -- fire up grid select
-    , ((modm,               xK_g     ), goToSelected myGSConfig)
-
-      -- close focused window
+    -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
 
      -- Rotate through the available layout algorithms
@@ -165,26 +149,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
+    -- Toggle the status bar gap
+    -- Use this binding with avoidStruts from Hooks.ManageDocks.
+    -- See also the statusBar function from Hooks.DynamicLog.
     --
+--    , ((modm              , xK_b     ), sendMessage ToggleStruts)
+
+    -- Toggle the border
     , ((modm .|. shiftMask, xK_b     ), withFocused toggleBorder)
-
-    -- some commands from my old config
-    , ((modm              , xK_a)     , onPrevNeighbour W.view)
-    , ((modm              , xK_o)     , onNextNeighbour W.view)
-    , ((modm .|. shiftMask, xK_a)     , onPrevNeighbour W.shift)
-    , ((modm .|. shiftMask, xK_o)     , onNextNeighbour W.shift)
-    , ((modm              , xK_Right) , nextWS)
-    , ((modm              , xK_Left)  , prevWS)
-    , ((modm,               xK_z)     , toggleWS)
-
-    -- make a scratchpad terminal
-    , ((modm                    ,xK_d), scratchpadSpawnActionTerminal myTerminal)
-
-    -- start/reset a pomodoro
-    , ((modm              , xK_Home  ), spawn "touch ~/.pomodoro_session")
-
-    -- kill a pomodoro
-    , ((modm              , xK_End   ), spawn "rm ~/.pomodoro_session")
 
     -- Lock screen
     , ((modm .|. shiftMask, xK_l     ), spawn "xscreensaver-command -lock")
@@ -195,15 +167,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
+    -- Run xmessage with a summary of the default keybindings (useful for beginners)
+    , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     ]
     ++
 
     --
-    -- mod-[:digit:], Switch to workspace N
-    -- mod-shift-[:digit:], Move client to workspace N
+    -- mod-[1..9], Switch to workspace N
+    -- mod-shift-[1..9], Move client to workspace N
     --
     [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
+        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
 
@@ -214,7 +188,37 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+    ++
 
+    -- screen/window movement commands from an old config
+    [
+      ((modm              , xK_a)     , onPrevNeighbour W.view)
+    , ((modm              , xK_o)     , onNextNeighbour W.view)
+    , ((modm .|. shiftMask, xK_a)     , onPrevNeighbour W.shift)
+    , ((modm .|. shiftMask, xK_o)     , onNextNeighbour W.shift)
+    , ((modm              , xK_Right) , nextWS)
+    , ((modm              , xK_Left)  , prevWS)
+    , ((modm,               xK_z)     , toggleWS)
+    ]
+    ++
+
+    -- comands related to time-tracking/productivity
+    --
+    [
+    -- start/reset a pomodoro
+      ((modm              , xK_Home  ), spawn "touch ~/.pomodoro_session")
+
+    -- kill a pomodoro
+    , ((modm              , xK_End   ), spawn "rm ~/.pomodoro_session")
+    ]
+    ++
+
+    -- interact with prompts
+    [ ((modm,                                xK_p), shellPrompt myXPConfig)
+    , ((modm .|. shiftMask,                  xK_p), passPrompt myXPConfig)
+    , ((modm .|. controlMask,                xK_p), passGeneratePrompt myXPConfig)
+    , ((modm .|. controlMask  .|. shiftMask, xK_p), passRemovePrompt myXPConfig)
+    ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -233,6 +237,11 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
                                        >> windows W.shiftMaster))
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
+
+    -- bind button6 and button7 (scroll wheel tilt) to move between workspaces
+    , ((0, 6), (\w -> prevWS))
+    , ((0, 7), (\w -> nextWS))
+
     ]
 
 ------------------------------------------------------------------------
@@ -276,12 +285,10 @@ myLayout = tiled ||| Mirror tiled ||| Full
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-               [ title =? "PGPLOT Server" --> doIgnore
-               , fmap ("PGPLOT Window" `isInfixOf`) title --> doFloat
-               , className =? "Display" --> doFloat
-               , title =? "Pledge" --> doFloat
-               ]
-               <+> scratchpadManageHookDefault
+    [ className =? "MPlayer" --> doFloat
+    , title =? "PGPLOT Server" --> doIgnore
+    , fmap ("PGPLOT Window" `isInfixOf`) title --> doFloat
+    ]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -292,7 +299,7 @@ myManageHook = composeAll
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
-myEventHook = mempty
+myEventHook = ewmhDesktopsEventHook
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -300,7 +307,25 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = updatePointer (0.95,0.95) (1,1)
+
+-- Move the mouse to the lower right corner when I change to a window
+myLogHook = updatePointer (0.95, 0.95) (0.0, 0.0)
+
+-- Custom PP, configure it as you like. It determines what is being written to the bar.
+myPP = xmobarPP { ppCurrent = xmobarColor "green" "black" . wrap "" ""
+                , ppVisible = xmobarColor "yellow" "black" . wrap "" ""
+                , ppHidden = xmobarColor "white" "black" . wrap "" ""
+                , ppHiddenNoWindows = xmobarColor "red" "black" . wrap "" ""
+                , ppOrder = \(ws:l:t:_)   -> [ws]
+                , ppSort = fmap (.scratchpadFilterOutWorkspace) $ ppSort xmobarPP
+                }
+
+-- Key binding to toggle the gap for the bar.
+mytoggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
+-- Define my xmobar
+myxmobar = statusBar "xmobar" myPP mytoggleStrutsKey
+
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -313,32 +338,11 @@ myLogHook = updatePointer (0.95,0.95) (1,1)
 myStartupHook = return ()
 
 ------------------------------------------------------------------------
-
-myPlacement = simpleSmart
-------------------------------------------------------------------------
-
--- Command to launch the bar.
-myBar = "xmobar"
-
--- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "green" "black" . wrap "" ""
-                , ppVisible = xmobarColor "yellow" "black" . wrap "" ""
-                , ppHidden = xmobarColor "white" "black" . wrap "" ""
-                , ppHiddenNoWindows = xmobarColor "red" "black" . wrap "" ""
-                , ppOrder = \(ws:l:t:_)   -> [ws]
-                , ppSort = fmap (.scratchpadFilterOutWorkspace) $ ppSort xmobarPP
-                }
-
--- Key binding to toggle the gap for the bar.
-
-toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
-
-------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey (ewmh defaults)
+main = xmonad =<< myxmobar (ewmh defaults)
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -368,3 +372,54 @@ defaults = def {
         logHook            = myLogHook,
         startupHook        = myStartupHook
     }
+
+-- | Finally, a copy of the default bindings in simple textual tabular format.
+help :: String
+help = unlines ["The default modifier key is 'alt'. Default keybindings:",
+    "",
+    "-- launching and killing programs",
+    "mod-Shift-Enter  Launch xterminal",
+    "mod-p            Launch dmenu",
+    "mod-Shift-p      Launch gmrun",
+    "mod-Shift-c      Close/kill the focused window",
+    "mod-Space        Rotate through the available layout algorithms",
+    "mod-Shift-Space  Reset the layouts on the current workSpace to default",
+    "mod-n            Resize/refresh viewed windows to the correct size",
+    "",
+    "-- move focus up or down the window stack",
+    "mod-Tab        Move focus to the next window",
+    "mod-Shift-Tab  Move focus to the previous window",
+    "mod-j          Move focus to the next window",
+    "mod-k          Move focus to the previous window",
+    "mod-m          Move focus to the master window",
+    "",
+    "-- modifying the window order",
+    "mod-Return   Swap the focused window and the master window",
+    "mod-Shift-j  Swap the focused window with the next window",
+    "mod-Shift-k  Swap the focused window with the previous window",
+    "",
+    "-- resizing the master/slave ratio",
+    "mod-h  Shrink the master area",
+    "mod-l  Expand the master area",
+    "",
+    "-- floating layer support",
+    "mod-t  Push window back into tiling; unfloat and re-tile it",
+    "",
+    "-- increase or decrease number of windows in the master area",
+    "mod-comma  (mod-,)   Increment the number of windows in the master area",
+    "mod-period (mod-.)   Deincrement the number of windows in the master area",
+    "",
+    "-- quit, or restart",
+    "mod-Shift-q  Quit xmonad",
+    "mod-q        Restart xmonad",
+    "mod-[1..9]   Switch to workSpace N",
+    "",
+    "-- Workspaces & screens",
+    "mod-Shift-[1..9]   Move client to workspace N",
+    "mod-{w,e,r}        Switch to physical/Xinerama screens 1, 2, or 3",
+    "mod-Shift-{w,e,r}  Move client to screen 1, 2, or 3",
+    "",
+    "-- Mouse bindings: default actions bound to mouse events",
+    "mod-button1  Set the window to floating mode and move by dragging",
+    "mod-button2  Raise the window to the top of the stack",
+    "mod-button3  Set the window to floating mode and resize by dragging"]
