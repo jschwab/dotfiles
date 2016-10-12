@@ -12,6 +12,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 
 import XMonad.Actions.CycleWS
+import XMonad.Actions.FindEmptyWorkspace
 import XMonad.Actions.NoBorders
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.UpdatePointer
@@ -179,6 +180,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+    ++
+
+    -- find and empty worksspace and or move a window there
+    [
+      ((modm,                xK_m    ), viewEmptyWorkspace)
+    , ((modm .|. shiftMask,  xK_m    ), tagToEmptyWorkspace)
+    ]
     ++
 
     --
