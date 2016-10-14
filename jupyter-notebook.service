@@ -1,0 +1,9 @@
+[Unit]
+Description=Jupyter notebook
+
+[Service]
+ExecStart=/usr/bin/jupyter notebook --no-browser
+WorkingDirectory=/home/jschwab
+
+[Install]
+WantedBy=default.target
