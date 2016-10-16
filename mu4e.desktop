@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=mu4e
+Exec=/home/jschwab/scripts/emacsmail %u
+Icon=emacs-icon
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/mailto;
