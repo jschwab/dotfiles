@@ -1,0 +1,6 @@
+[Unit]
+Description=Sync calendar files (and convert to org-mode)
+
+[Service]
+Type=simple
+ExecStart=/home/jschwab/dotfiles/synccal
