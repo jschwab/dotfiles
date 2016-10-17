@@ -2,6 +2,7 @@
 Description=Jupyter notebook
 
 [Service]
+Environment="PYTHONPATH=/home/jschwab/Software/py_mesa_reader/"
 ExecStart=/usr/bin/jupyter notebook --no-browser
 WorkingDirectory=/home/jschwab
 
