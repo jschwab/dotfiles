@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# switch ctrl and caps lock.  same line is in my xinitrc, but it
+# doesn't seem to apply on hotplugged keyboards
+setxkbmap -option ctrl:swapcaps
+
+# fix trayer weirdness.  I don't know how to send it a signal, so I'll
+# just briefly create a GTK tray icon from python
+python2 -c "import gtk; gtk.StatusIcon()"
