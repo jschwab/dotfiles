@@ -1,0 +1,7 @@
+[Unit]
+Description=Sync org files
+Requisite=emacs.service
+
+[Service]
+Type=simple
+ExecStart=/home/jschwab/dotfiles/syncorg

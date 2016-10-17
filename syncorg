@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ORG_PATH=~/org
+
+cd $ORG_PATH
+emacsclient -e "(org-save-all-org-buffers)"
+
+# assume it will succeed
+touch ${ORG_PATH}/.sync
+
+/home/jschwab/Software/git-sync/git-sync
+
+# if it fails remove the sync file
+if [ $? -ne 0 ]; then
+    rm ${ORG_PATH}/.sync
+fi
