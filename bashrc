@@ -47,15 +47,10 @@ alias rm='rm -I'
 alias pdfmerge="gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=merge.pdf -dBATCH"
 alias timestamp="date +%d%m%y-%H%M%S"
 alias pdb="python -m pdb"
-alias pylab="ipython --pylab"
-alias pledge="/home/jschwab/Software/McAfee/Pledge/Pledge"
 
-# help bash save history
-#shopt -s histappend
-#export PROMPT_COMMAND="history -a"
 
 # add rubygems to path
-export PATH=$PATH:/home/jschwab/.gem/ruby/2.2.0/bin
+export PATH=$PATH:/home/jschwab/.gem/ruby/2.3.0/bin
 
 # add cabal (haskell) to path
 export PATH=$PATH:/home/jschwab/.cabal/bin
@@ -67,6 +62,10 @@ export PATH=$PATH:/home/jschwab/scripts
 export PYTHONPATH=/home/jschwab/Software/:$PYTHONPATH
 export PYTHONPATH=/home/jschwab/Software/elpy/:$PYTHONPATH
 export PYTHONPATH=/home/jschwab/Software/py_mesa_reader/:$PYTHONPATH
+export PYTHONPATH=/home/jschwab/Software/solvertools/:$PYTHONPATH
+
+# make sure systemd knows about this PYTHONPATH
+systemctl --user import-environment PYTHONPATH
 
 # this is a machine has two physical cores
 export OMP_NUM_THREADS=2
@@ -74,7 +73,6 @@ export OMP_NUM_THREADS=2
 # convinient emacs aliases
 alias ec="emacsclient -n -c"
 alias ecof="emacsclient -n"
-alias kill-emacs="emacsclient -e '(kill-emacs)'"
 
 # use emacs for everything
 export ALTERNATE_EDITOR=emacs
@@ -86,30 +84,13 @@ export VISUAL="emacsclient -c"
 export WORKON_HOME=~/.virtualenvs
 source /usr/bin/virtualenvwrapper.sh
 
-# add some shortcuts
-
 # quickly go to research directory
 cdrp(){
     cd /home/jschwab/Research/Eliot/project$1_*
 }
 
-# quickly go to puzzle directory
-cddc(){
-    cd /home/jschwab/Puzzling/BerkeleyHunt/2015/hunt2015/dailycal/spring
-}
-
-# quickly go to puzzle directory
-cdhunt(){
-    cd /home/jschwab/Puzzling/BerkeleyHunt/2015/hunt2015/website
-}
-
-# quickly go to puzzle directory
-cdmhunt(){
-    cd /home/jschwab/Puzzling/MIT/2015
-}
-
-# for msmtpq
-export EMAIL_QUEUE_QUIET=t
+# for msmtpq; hardcoded now
+# export EMAIL_QUEUE_QUIET=t
 
 # no need to break osx habits...
 alias open="xdg-open"
@@ -126,3 +107,6 @@ alias halt="sudo systemctl halt"
 search() {
   aura -Ss $1 && aura -As $1
 }
+
+# OPAM configuration
+. /home/jschwab/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
