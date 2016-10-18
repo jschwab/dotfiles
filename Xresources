@@ -13,9 +13,8 @@ Skype.foreground:      #000000
 
 ! make bigger terminal fonts
 
-*faceName:      xft:Dejavu Sans Mono-11
-*scaleHeight:   1.02
-emacs.font:     Dejavu Sans Mono-11
+*faceName:      xft:Hack-11
+emacs.font:     Hack-11
 
 ! do not show pgplot server
 pgxwin.server.visible: False

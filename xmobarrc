@@ -1,4 +1,4 @@
-Config { font = "xft:Deja Vu Sans Mono-11"
+Config { font = "xft:Hack-11"
        , bgColor = "black"
        , fgColor = "white"
        , position = Top
