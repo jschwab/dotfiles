@@ -295,8 +295,9 @@ myLayout = tiled ||| Mirror tiled ||| Full
 myManageHook = composeAll
     [ className =? "MPlayer" --> doFloat
     , title =? "PGPLOT Server" --> doIgnore
-    , fmap ("PGPLOT Window" `isInfixOf`) title --> doFloat
-    ]
+    , fmap ("PGPLOT Window" `isInfixOf`) title --> doFloat ]
+    <+>
+    scratchpadManageHook (W.RationalRect 0.25 0.25 0.5 0.5)
 
 ------------------------------------------------------------------------
 -- Event handling
