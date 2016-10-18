@@ -14,7 +14,7 @@ Config { font = "xft:Deja Vu Sans Mono-11"
                                    "-l", "red", "-m", "blue", "-h", "green"]
                                    60
                     , Run Date "%a %d %b %Y %H:%M" "date" 60
-                    , Run Brightness ["-t", "<percent>%", "-p", "2"] 60
+                    , Run Brightness ["-t", "<percent>%", "-p", "2", "--", "-D", "intel_backlight"] 60
                     , Run Locks
                     , Run Com "/home/jschwab/scripts/unread_count" [] "unread_count" 600
                     , Run Com "/home/jschwab/scripts/unsent_count" [] "unsent_count" 600
