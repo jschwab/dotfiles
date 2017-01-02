@@ -78,23 +78,25 @@ export OMP_NUM_THREADS=2
 alias ec="emacsclient -n -c"
 alias ecof="emacsclient -n"
 
-# use emacs for everything
+# view file read-only in emacs
+ev() {
+    emacsclient -n -c --eval "(view-file \"$1\")"
+}
+
+# open magit in current dir
+eg() {
+    emacsclient -n -c --eval "(magit-status-internal \"$(pwd)\")"
+}
+
+# Use emacs for everything
 export ALTERNATE_EDITOR=emacs
 export EDITOR="emacsclient -c"
 export VISUAL="emacsclient -c"
-
-# easily interact with python virtualenvs
-# https://wiki.archlinux.org/index.php/Python_VirtualEnv#Virtualenvwrapper
-export WORKON_HOME=~/.virtualenvs
-source /usr/bin/virtualenvwrapper.sh
 
 # quickly go to research directory
 cdrp(){
     cd /home/jschwab/Research/Eliot/project$1_*
 }
-
-# for msmtpq; hardcoded now
-# export EMAIL_QUEUE_QUIET=t
 
 # no need to break osx habits...
 alias open="xdg-open"
@@ -111,6 +113,3 @@ alias halt="sudo systemctl halt"
 search() {
   aura -Ss $1 && aura -As $1
 }
-
-# OPAM configuration
-. /home/jschwab/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
