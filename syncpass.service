@@ -1,0 +1,6 @@
+[Unit]
+Description=Sync passwords
+
+[Service]
+Type=simple
+ExecStart=/home/jschwab/dotfiles/syncpass
