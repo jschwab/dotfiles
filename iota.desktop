@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Iota
+Exec=iota url %u
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/iota-protocol;
+
