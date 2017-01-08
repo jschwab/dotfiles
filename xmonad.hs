@@ -83,8 +83,8 @@ myXPConfig = def { position = Top
                  , defaultText = []
                  , alwaysHighlight = True
                  , promptKeymap = emacsLikeXPKeymap
-                 , height = 22
                  , font = "xft:Hack-11"
+                 , height = 44
                  , searchPredicate = isCaseInsensitiveInfixOf
                  }
 

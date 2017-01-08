@@ -22,12 +22,12 @@ pgxwin.server.visible: False
 ! black! Xft settings ---------------------------------------------------------------
 ! based off of euphrasia v2 by bohoomil
 
-Xft.dpi:        96
-Xft.antialias:  true
-Xft.rgba:       rgb
-Xft.hinting:    true
-Xft.hintstyle:  hintslight
-Xft.lcdfilter:  lcdlight
+! Xft.dpi:        192
+! Xft.antialias:  true
+! Xft.rgba:       rgb
+! Xft.hinting:    true
+! Xft.hintstyle:  hintslight
+! Xft.lcdfilter:  lcdlight
 
 *color0:  #222946
 ! dark grey
