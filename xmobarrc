@@ -6,7 +6,6 @@ Config { font = "xft:Hack-11"
        , commands = [ Run StdinReader
                     , Run Cpu ["-t", "<total>%","-p","2","-L","3","-H","50","--normal","green","--high","red"] 60
                     , Run Memory ["-t", "<usedratio>%","-p","2"] 60
-                    , Run Com "uname" ["-s","-r"] "" 36000
                     , Run Battery  ["-t", "<acstatus><left>% (<timeleft>)",
                                    "-L", "10", "-H", "80", "-p", "3",
                                    "--", "-O", "AC", "-i", "AC", "-o", "BAT",
@@ -24,5 +23,5 @@ Config { font = "xft:Hack-11"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %uname% | %locks% | N:%unread_count% Q:%unsent_count% O:%org_status% | C:%cpu% M:%memory% | B:%bright% V:%volume% | %battery% | <fc=#ee9a00>%date% %pomodoro%</fc>|          "
+       , template = "%StdinReader% }{%locks% | N:%unread_count% Q:%unsent_count% O:%org_status% | C:%cpu% M:%memory% | B:%bright% V:%volume% | %battery% | <fc=#ee9a00>%date% %pomodoro%</fc>|          "
        }
