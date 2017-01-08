@@ -12,13 +12,20 @@
 (xbindkey '("XF86MonBrightnessDown") "xbacklight -dec 5")
 (xbindkey '("XF86MonBrightnessUp") "xbacklight -inc 5")
 
-;; bind monitor switching to F11
-(xbindkey '("F11") "autorandr --change")
-;; bind monitor switching to F11 on laptop keyboard
-(xbindkey '("XF86LaunchA") "autorandr --change")
+;; bind monitor switching hotkeys
+;;
+;; on laptop keyboard
+;;   [][][] key -> XF86LaunchA
+;;   Fn + [][][] -> F11
+;;
+;; on USB keyboard (Logitech Wave)
+;;   F11 -> F11
 
-;; take a screenshot
-(xbindkey '("XF86MyComputer") "/home/jschwab/scripts/screenshot")
+;; so bind F11 to autoswitch on both
+(xbindkey '("F11") "autorandr --change")
+
+;; and bind [][][] to special "all monitor" target
+(xbindkey '("XF86LaunchA") "autorandr --load horizontal")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; End of xbindkeys guile configuration ;;
