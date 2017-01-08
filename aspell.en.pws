@@ -1,10 +1,13 @@
-personal_ws-1.1 en 58 
+personal_ws-1.1 en 66 
 metallicities
 asteroseismology
 synchrotron
 isobaric
+iteratively
+accretor
 luminosities
 plasmas
+WD
 deflagration
 observables
 ansatz
@@ -15,8 +18,10 @@ magnetar
 thermalization
 hydrostatic
 accrete
+AGB
 timestep
 isothermal
+isochrones
 accreted
 adiabatically
 inlists
@@ -34,10 +39,12 @@ phonon
 gravitationally
 thermalized
 metallicity
-radiative
 parameterize
+radiative
+spacings
 accreting
 photosphere
+astrophysically
 observationally
 neutronizes
 Keplerian
@@ -48,8 +55,9 @@ photospheres
 Annelise
 unphysical
 Ledoux
-radians
 unburned
+radians
+semiconvection
 diffusivity
 viscously
 pycnonuclear
