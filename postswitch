@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# wait for things to settle so that the keyboard changes get applied
+sleep 3
+
 # switch ctrl and caps lock.  same line is in my xinitrc, but it
 # doesn't seem to apply on hotplugged keyboards
 setxkbmap -option ctrl:swapcaps
