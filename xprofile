@@ -24,29 +24,26 @@ setxkbmap -option ctrl:swapcaps
 xbindkeys
 
 # password and key management
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+eval $(/usr/bin/gnome-keyring-daemon --start)
 export SSH_AUTH_SOCK
 
 # fire up the screensaver
 xscreensaver -no-splash &
 
-# Set up an icon tray
- 
-trayer --edge top --align right --SetDockType true --SetPartialStrut true \
- --expand true --width 90 --widthtype pixel --height 22 --transparent true --alpha 0 --tint 0x000000 &
+# do xmonad specific things
+if [ "${DESKTOP_SESSION}" == "xmonad" ] ; then
+
+    # Set up an icon tray
+    trayer --edge top --align right --SetDockType true --SetPartialStrut true \
+           --expand true --width 90 --widthtype pixel --height 40 --transparent true --alpha 0 --tint 0x000000 &
+fi
 
 if [ -x /usr/bin/nm-applet ] ; then
-   nm-applet --sm-disable &
+    nm-applet --sm-disable &
 fi
 
 # start pulse audio
-/usr/bin/start-pulseaudio-x11
-
-# start aerofs
-aerofs
+#/usr/bin/start-pulseaudio-x11
 
 # turn off bell
 xset -b
-
-# launch xmonad
-exec xmonad
