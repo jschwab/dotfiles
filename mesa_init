@@ -1,0 +1,17 @@
+[git]
+    MESA_DIR = /home/jschwab/Software/mesa
+
+[git-svn]
+    MESA_DIR = /home/jschwab/Software/mesa-git-svn
+
+[svn]
+    MESA_DIR = /home/jschwab/Software/mesa-svn
+
+[r8845]
+    MESA_DIR = /home/jschwab/Software/mesa-r8845
+
+[r8118]
+    MESA_DIR = /home/jschwab/Software/mesa-r8118
+
+[r7624]
+    MESA_DIR = /home/jschwab/Software/mesa-r7624
