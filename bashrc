@@ -40,6 +40,10 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# replace directory names with the results of word expansion when
+# performing filename completion
+shopt -s direxpand
+
 # basic command tweaks
 alias ls='ls --color=auto'
 alias ll='ls -alF'
