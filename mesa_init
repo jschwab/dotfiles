@@ -7,6 +7,9 @@
 [svn]
     MESA_DIR = /home/jschwab/Software/mesa-svn
 
+[r9575]
+    MESA_DIR = /home/jschwab/Software/mesa-r9575
+
 [r8845]
     MESA_DIR = /home/jschwab/Software/mesa-r8845
 
