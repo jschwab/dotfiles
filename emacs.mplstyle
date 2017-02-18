@@ -1,0 +1,4 @@
+# transparent background is bad in dark emacs
+
+figure.facecolor : white
+figure.edgecolor : white

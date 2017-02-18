@@ -1,0 +1,4 @@
+# just the things to tweak from the now much-improved defaults
+
+# this makes the figures more reasonable on my hidpi display
+savefig.dpi: 192

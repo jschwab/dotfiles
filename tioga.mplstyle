@@ -1,0 +1,2 @@
+# Tioga colors
+axes.prop_cycle    : cycler('color', ['DodgerBlue', 'Goldenrod', 'Coral', 'Orchid', 'FireBrick', 'Purple'])
