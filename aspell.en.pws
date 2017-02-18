@@ -1,9 +1,10 @@
-personal_ws-1.1 en 66 
+personal_ws-1.1 en 77 
+WDs
 metallicities
 asteroseismology
 synchrotron
-isobaric
 iteratively
+isobaric
 accretor
 luminosities
 plasmas
@@ -11,17 +12,23 @@ WD
 deflagration
 observables
 ansatz
+Spruit
 Bildsten
+analytics
 Boussinesq
 asteroseismic
 magnetar
 thermalization
 hydrostatic
+Urca
+Tayler
 accrete
+advected
 AGB
 timestep
 isothermal
 isochrones
+Piro
 accreted
 adiabatically
 inlists
@@ -37,6 +44,8 @@ accretes
 thermohaline
 phonon
 gravitationally
+Paxton
+adiabat
 thermalized
 metallicity
 parameterize
@@ -52,6 +61,7 @@ Quataert
 convectively
 circumstellar
 photospheres
+inlist
 Annelise
 unphysical
 Ledoux
@@ -59,6 +69,7 @@ unburned
 radians
 semiconvection
 diffusivity
+reproducibly
 viscously
 pycnonuclear
 opacities
