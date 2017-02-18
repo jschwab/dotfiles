@@ -33,8 +33,8 @@ shopt -s histappend
 HISTSIZE=-1
 HISTFILESIZE=-1
 
-# Save and reload the history after each command finishes
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+# Save the history after each command finishes
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
