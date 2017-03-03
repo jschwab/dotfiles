@@ -23,6 +23,8 @@ import XMonad.Prompt
 import XMonad.Prompt.Pass
 import XMonad.Prompt.Shell
 
+import XMonad.Layout.ResizableTile
+
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -140,6 +142,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Expand the master area
     , ((modm,               xK_l     ), sendMessage Expand)
+
+    , ((modm .|. controlMask,    xK_h), sendMessage MirrorShrink)
+    , ((modm .|. controlMask,    xK_l), sendMessage MirrorExpand)
 
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
@@ -266,7 +271,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 myLayout = tiled ||| Mirror tiled ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
+     tiled   = ResizableTall nmaster delta ratio []
 
      -- The default number of windows in the master pane
      nmaster = 1
