@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=mu4e
-Exec=/home/jschwab/scripts/emacsmail %u
+Exec=/home/jschwab/dotfiles/emacsmail %u
 Icon=emacs-icon
 Type=Application
 Terminal=false
