@@ -1,4 +1,4 @@
-personal_ws-1.1 en 77 
+personal_ws-1.1 en 84 
 WDs
 metallicities
 asteroseismology
@@ -12,9 +12,9 @@ WD
 deflagration
 observables
 ansatz
+analytics
 Spruit
 Bildsten
-analytics
 Boussinesq
 asteroseismic
 magnetar
@@ -22,8 +22,9 @@ thermalization
 hydrostatic
 Urca
 Tayler
-accrete
 advected
+accrete
+parallelization
 AGB
 timestep
 isothermal
@@ -35,9 +36,12 @@ inlists
 isochoric
 reproducibility
 Schwab
+photoionization
 interferometers
 Schwarzschild
 neutronization
+MeV
+lensing
 microphysics
 parameterized
 accretes
@@ -48,8 +52,9 @@ Paxton
 adiabat
 thermalized
 metallicity
-parameterize
+logarithmically
 radiative
+parameterize
 spacings
 accreting
 photosphere
@@ -58,12 +63,14 @@ observationally
 neutronizes
 Keplerian
 Quataert
+timesteps
 convectively
 circumstellar
 photospheres
 inlist
 Annelise
 unphysical
+Parallelize
 Ledoux
 unburned
 radians
