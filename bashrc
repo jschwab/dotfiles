@@ -113,3 +113,7 @@ alias halt="sudo systemctl halt"
 search() {
   aura -Ss $1 && aura -As $1
 }
+
+# update path in systemd
+systemctl --user import-environment PATH
+
