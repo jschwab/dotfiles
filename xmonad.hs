@@ -4,7 +4,7 @@
 
 import XMonad
 import Data.Char (toLower)
-import Data.List (isInfixOf)
+import Data.List (isInfixOf, isPrefixOf)
 import Data.Monoid
 import System.Exit
 
@@ -78,6 +78,14 @@ downCase = map toLower
 isCaseInsensitiveInfixOf :: String -> String -> Bool
 isCaseInsensitiveInfixOf s l = (downCase s) `isInfixOf` (downCase l)
 
+-- exclude things from Private
+hasPrivatePrefix :: String -> String -> Bool
+hasPrivatePrefix s l = "Private" `isPrefixOf` l
+
+-- pass search predicate
+passSearchPredicate :: String -> String -> Bool
+passSearchPredicate s l = (not (hasPrivatePrefix s l)) && (isCaseInsensitiveInfixOf s l)
+
 myXPConfig = def { position = Top
                  , promptBorderWidth = 0
                  , bgColor = "Black"
@@ -87,7 +95,7 @@ myXPConfig = def { position = Top
                  , promptKeymap = emacsLikeXPKeymap
                  , font = "xft:Hack-11"
                  , height = 44
-                 , searchPredicate = isCaseInsensitiveInfixOf
+                 , searchPredicate = passSearchPredicate
                  }
 
 ------------------------------------------------------------------------
