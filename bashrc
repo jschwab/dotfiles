@@ -117,6 +117,13 @@ search() {
   aura -Ss $1 && aura -As $1
 }
 
+# make comments on a pdf
+make_comments() {
+    NEWNAME="$(basename $1 .pdf)-$(date +%F)-jws.pdf"
+    mv "$1" "$NEWNAME" && ec "$NEWNAME"
+}
+
 # update path in systemd
 systemctl --user import-environment PATH
 
+#
