@@ -11,6 +11,7 @@ fi
 # set HiDPI early on
 xrandr --dpi 192
 export GDK_SCALE=2
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
 
 # if it exists, use .Xresources
 if [ -s .Xresources ]; then
@@ -35,7 +36,7 @@ if [ "${DESKTOP_SESSION}" == "xmonad" ] ; then
 
     # Set up an icon tray
     trayer --edge top --align right --SetDockType true --SetPartialStrut true \
-           --expand true --width 90 --widthtype pixel --height 40 --transparent true --alpha 0 --tint 0x000000 &
+           --expand true --width 180 --widthtype pixel --height 40 --transparent true --alpha 0 --tint 0x000000 &
 fi
 
 if [ -x /usr/bin/nm-applet ] ; then
