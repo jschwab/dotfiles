@@ -9,6 +9,9 @@
 export MESA_DIR=/home/jschwab/Software/mesa
 export MESASDK_ROOT=/opt/mesasdk
 
+export MESA_OP_MONO_DATA_PATH=/home/jschwab/Software/OP4STARS_1.3/mono
+export MESA_OP_MONO_DATA_CACHE_FILENAME=/home/jschwab/Software/OP4STARS_1.3/mono/op_mono_cache.bin
+
 activatemesasdk () {
     source /home/jschwab/Software/mesa-init/mesasdk_init.sh
 }
