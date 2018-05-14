@@ -1,7 +1,7 @@
 [general]
-accounts = personal, berkeley, santacruz
+accounts = personal, santacruz
 pythonfile = ~/.offlineimap.py
-maxsyncaccounts = 3
+maxsyncaccounts = 2
 
 ################################################################################
 
@@ -23,25 +23,6 @@ oauth2_client_id_eval = get_pass('Mail/jschwab@gmail.com-client_id')
 oauth2_client_secret_eval = get_pass('Mail/jschwab@gmail.com-client_secret')
 oauth2_refresh_token_eval = get_pass('Mail/jschwab@gmail.com-refresh_token')
 
-maxconnections = 2
-usecompression = yes
-sslcacertfile = /etc/ssl/certs/ca-certificates.crt
-
-################################################################################
-
-[Account berkeley]
-localrepository = berkeley-local
-remoterepository = berkeley-remote
-
-[Repository berkeley-local]
-type = Maildir
-localfolders = ~/Mail/berkeley
-
-[Repository berkeley-remote]
-type = Gmail
-auth_mechanisms = PLAIN
-remoteuser = jwschwab@berkeley.edu
-remotepasseval = get_pass('Mail/jwschwab@berkeley.edu')
 maxconnections = 2
 usecompression = yes
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
