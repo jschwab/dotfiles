@@ -1,4 +1,4 @@
-personal_ws-1.1 en 108 
+personal_ws-1.1 en 113 
 accrete
 isothermal
 photometric
@@ -9,6 +9,7 @@ unburned
 neutronization
 entrained
 minima
+Prandtl
 analytics
 thermohaline
 circumbinary
@@ -16,8 +17,8 @@ reproducibly
 Schwarzschild
 advective
 parallelization
-isochrones
 isotropy
+isochrones
 metallicity
 Parallelize
 Boussinesq
@@ -33,6 +34,7 @@ nucleosynthesis
 spacings
 semiconvection
 collimated
+inspiral
 timestep
 nucleosynthetic
 circularization
@@ -61,6 +63,7 @@ lensing
 Bildsten
 Ledoux
 photosphere
+strategize
 accretes
 Jacobian
 WD
@@ -76,6 +79,7 @@ Piro
 gravitationally
 hydrostatic
 opacities
+thermocompositional
 toroidal
 GRMHD
 radians
@@ -95,6 +99,7 @@ astrophysically
 Keplerian
 phonon
 accretor
+enthalpy
 plasmas
 magnetar
 accreting
