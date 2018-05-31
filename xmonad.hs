@@ -213,10 +213,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- screen/window movement commands from an old config
     [
-      ((modm              , xK_a)     , onPrevNeighbour W.view)
-    , ((modm              , xK_o)     , onNextNeighbour W.view)
-    , ((modm .|. shiftMask, xK_a)     , onPrevNeighbour W.shift)
-    , ((modm .|. shiftMask, xK_o)     , onNextNeighbour W.shift)
+      ((modm              , xK_a)     , onPrevNeighbour def W.view)
+    , ((modm              , xK_o)     , onNextNeighbour def W.view)
+    , ((modm .|. shiftMask, xK_a)     , onPrevNeighbour def W.shift)
+    , ((modm .|. shiftMask, xK_o)     , onNextNeighbour def W.shift)
     , ((modm              , xK_Right) , nextWS)
     , ((modm              , xK_Left)  , prevWS)
     , ((modm,               xK_z)     , toggleWS)
