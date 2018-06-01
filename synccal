@@ -9,9 +9,6 @@ CALDIR=/home/jschwab/org/calendar/
 CAL1_NAME=personal
 CAL1_URL=$(pass show Calendar/personal-url)
 
-CAL2_NAME=berkeley
-CAL2_URL=$(pass show Calendar/berkeley-url)
-
 CAL3_NAME=santacruz
 CAL3_URL=$(pass show Calendar/santacruz-url)
 
@@ -35,10 +32,6 @@ cd $CALDIR
 # get cal 1
 $WGET -nv -O ${CAL1_NAME}.ics $CAL1_URL
 $ICS2ORG < ${CAL1_NAME}.ics > ${CAL1_NAME}.org
-
-# get cal 2
-$WGET -nv -O ${CAL2_NAME}.ics $CAL2_URL
-$ICS2ORG < ${CAL2_NAME}.ics > ${CAL2_NAME}.org
 
 # get cal 3
 $WGET -nv -O ${CAL3_NAME}.ics $CAL3_URL
