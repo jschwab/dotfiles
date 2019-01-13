@@ -8,6 +8,7 @@
 # set up mesa
 export MESA_DIR=/home/jschwab/Software/mesa
 export MESASDK_ROOT=/opt/mesasdk
+export REPO_NAME=mesa^mesa
 
 export MESA_OP_MONO_DATA_PATH=/home/jschwab/Software/OP4STARS_1.3/mono
 export MESA_OP_MONO_DATA_CACHE_FILENAME=/home/jschwab/Software/OP4STARS_1.3/mono/op_mono_cache.bin
