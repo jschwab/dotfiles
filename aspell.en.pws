@@ -1,4 +1,4 @@
-personal_ws-1.1 en 113 
+personal_ws-1.1 en 130 
 accrete
 isothermal
 photometric
@@ -20,24 +20,30 @@ parallelization
 isotropy
 isochrones
 metallicity
+Borealis
 Parallelize
 Boussinesq
 pycnonuclear
 observables
 radiative
+Timmes
 parameterized
 Fortran
 thermalization
+unevolved
 circumstellar
 uncommented
 nucleosynthesis
 spacings
+uncomment
 semiconvection
 collimated
 inspiral
+integrand
 timestep
 nucleosynthetic
 circularization
+diffusivities
 bolometric
 luminosities
 diffusivity
@@ -50,6 +56,7 @@ deflagration
 thermalized
 Quataert
 Schwab
+notational
 convectively
 neutronizes
 photospheres
@@ -57,7 +64,9 @@ durations
 inlist
 adiabatically
 ansatz
+Eulerian
 accreted
+Coronae
 Annelise
 lensing
 Bildsten
@@ -73,6 +82,7 @@ asteroseismic
 tridiagonal
 synchrotron
 Héctor
+superluminous
 iteratively
 photoionization
 Piro
@@ -89,6 +99,7 @@ advected
 parameterize
 baryonic
 AGB
+energetics
 metallicities
 unphysical
 Paxton
@@ -99,9 +110,13 @@ astrophysically
 Keplerian
 phonon
 accretor
+inviscid
 enthalpy
+eigenvectors
+Subdwarfs
 plasmas
 magnetar
+equilibrates
 accreting
 microphysics
 hydrodynamical
@@ -109,6 +124,8 @@ numerics
 Tayler
 isobaric
 reproducibility
+Linearizing
+pseudocode
 inlists
 observationally
 timesteps
