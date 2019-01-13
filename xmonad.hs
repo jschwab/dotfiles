@@ -2,6 +2,8 @@
 -- xmonad config file on monolith
 --
 
+import Numeric
+
 import XMonad
 import Data.Char (toLower)
 import Data.List (isInfixOf, isPrefixOf)
@@ -17,6 +19,7 @@ import XMonad.Actions.NoBorders
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.UpdatePointer
 
+import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 
 import XMonad.Prompt
@@ -86,6 +89,22 @@ hasPrivatePrefix s l = "Private" `isPrefixOf` l
 passSearchPredicate :: String -> String -> Bool
 passSearchPredicate s l = (not (hasPrivatePrefix s l)) && (isCaseInsensitiveInfixOf s l)
 
+-- spawning duplicate terminal
+-- https://marcinchmiel.com/articles/2017-09/launching-terminal-emulator-in-current-working-directory-in-xmonad/
+
+mkTerm = withWindowSet launchTerminal
+
+launchTerminal ws = case W.peek ws of
+       Nothing -> runInTerm "" "$SHELL"
+       Just xid -> terminalInCwd xid
+
+terminalInCwd xid = let
+  hex = showHex xid " "
+  shInCwd = "'cd $(readlink /proc/$(ps --ppid $(xprop -id 0x" ++ hex
+    ++ "_NET_WM_PID | cut -d\" \" -f3) -o pid= | tr -d \" \")/cwd) && $SHELL'"
+  in runInTerm "" $ "sh -c " ++ shInCwd
+
+
 myXPConfig = def { position = Top
                  , promptBorderWidth = 0
                  , bgColor = "Black"
@@ -103,8 +122,11 @@ myXPConfig = def { position = Top
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
-    -- launch a terminal
+    -- launch a new terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+
+    -- duplicate an existing terminal
+    , ((modm .|. shiftMask .|. controlMask, xK_Return), mkTerm)
 
     -- launch an emacs client
     , ((modm .|. controlMask, xK_Return), spawn "emacsclient -n -c")
