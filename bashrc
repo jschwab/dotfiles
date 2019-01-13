@@ -60,11 +60,14 @@ alias pdfmerge="gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=merge.pdf -dBATCH"
 alias timestamp="date +%d%m%y-%H%M%S"
 alias pdb="python -m pdb"
 
+# add local binary directory
+export PATH="$PATH:$HOME/.local/bin"
+
 # add rubygems to path
 export PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
 
 # add scripts directory
-export PATH=$PATH:/home/jschwab/scripts
+export PATH="$PATH:$HOME/scripts"
 
 # look for python modules in my software directory
 export PYTHONPATH=/home/jschwab/Software/:$PYTHONPATH
