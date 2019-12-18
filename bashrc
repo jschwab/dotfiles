@@ -130,4 +130,5 @@ make_comments() {
 # update path in systemd
 systemctl --user import-environment PATH
 
-#
+# set up conda
+. /opt/anaconda/etc/profile.d/conda.sh
