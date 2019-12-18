@@ -27,6 +27,9 @@
 ;; and bind [][][] to special "all monitor" target
 (xbindkey '("XF86LaunchA") "autorandr --load horizontal")
 
+(xbindkey '("Print") "import /tmp/$(date +\"screenshot-on-%F-at-%T.png\")")
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; End of xbindkeys guile configuration ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
