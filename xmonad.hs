@@ -134,6 +134,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- make a scratchpad terminal
     , ((modm                    ,xK_d), scratchpadSpawnActionTerminal myTerminal)
 
+    -- show a calendar
+    , ((modm                    ,xK_c), spawn "gsimplecal")
+
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
 
