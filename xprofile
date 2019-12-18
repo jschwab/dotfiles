@@ -47,6 +47,10 @@ if [ -x /usr/bin/nm-applet ] ; then
     nm-applet --sm-disable &
 fi
 
+if [ -x /usr/bin/caffeine ] ; then
+     /usr/bin/caffeine &
+fi
+
 # start pulse audio
 #/usr/bin/start-pulseaudio-x11
 
