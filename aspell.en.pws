@@ -1,4 +1,4 @@
-personal_ws-1.1 en 153 
+personal_ws-1.1 en 164 
 AGB
 Annelise
 Bildsten
@@ -52,6 +52,7 @@ advected
 advective
 analytics
 ansatz
+apocenter
 asteroseismic
 asteroseismology
 astrophysically
@@ -62,16 +63,19 @@ circularization
 circumbinary
 circumstellar
 collimated
+collisional
 colorbar
 convectively
 deflagration
 deflagrations
 diffusivities
 diffusivity
+discretization
 discretized
 durations
 eigenvectors
 ejecta
+emissivities
 energetics
 enthalpy
 entrained
@@ -80,6 +84,7 @@ fiducial
 gravitationally
 hydrodynamical
 hydrostatic
+hydrostatically
 inlist
 inlists
 inspiral
@@ -97,6 +102,7 @@ lensing
 logarithmically
 luminosities
 magnetar
+magnetohydrodynamic
 metallicities
 metallicity
 microphysics
@@ -114,9 +120,12 @@ opacities
 parallelization
 parameterize
 parameterized
+parameterizes
 phonon
+phonons
 photoionization
 photometric
+photometrically
 photometry
 photosphere
 photospheres
@@ -141,6 +150,7 @@ synchrotron
 thermalization
 thermalized
 thermocompositional
+thermodynamically
 thermohaline
 timestep
 timesteps
@@ -149,6 +159,7 @@ tridiagonal
 unburned
 uncomment
 uncommented
+uncommenting
 unevolved
 unphysical
 viscously
