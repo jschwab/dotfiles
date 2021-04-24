@@ -36,7 +36,7 @@ if [ "${DESKTOP_SESSION}" == "xmonad" ] ; then
 
     # Set up an icon tray
     trayer --edge top --align right --SetDockType true --SetPartialStrut true \
-           --expand true --width 180 --widthtype pixel --height 40 --transparent true --alpha 0 --tint 0x000000 &
+           --expand true --width 240 --widthtype pixel --height 40 --transparent true --alpha 0 --tint 0x000000 &
 
     # let things know about windowing
     export _JAVA_AWT_WM_NONREPARENTING=1

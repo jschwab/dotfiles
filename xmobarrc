@@ -23,5 +23,5 @@ Config { font = "xft:Hack-11"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{%locks% | N:%unread_count% Q:%unsent_count% O:%org_status% | C:%cpu% M:%memory% | B:%bright% V:%volume% | %battery% | <fc=#ee9a00>%date% %pomodoro%</fc>|          "
+       , template = "%StdinReader% }{%locks% | N:%unread_count% Q:%unsent_count% O:%org_status% | C:%cpu% M:%memory% | B:%bright% V:%volume% | %battery% | <fc=#ee9a00>%date% %pomodoro%</fc>|             "
        }
