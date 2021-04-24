@@ -7,14 +7,23 @@
 [git-svn]
     MESA_DIR = /home/jschwab/Software/mesa-git-svn
 
+[r15140]
+    MESA_DIR = /home/jschwab/Software/mesa-r15140
+
+[r12778]
+    MESA_DIR = /home/jschwab/Software/mesa-r12778
+
+[r12115]
+    MESA_DIR = /home/jschwab/Software/mesa-r12115
+
+[r11701]
+    MESA_DIR = /home/jschwab/Software/mesa-r11701
+
 [r10398]
     MESA_DIR = /home/jschwab/Software/mesa-r10398
 
 [r10108]
     MESA_DIR = /home/jschwab/Software/mesa-r10108
-
-[r10000]
-    MESA_DIR = /home/jschwab/Software/mesa-r10000
 
 [r9793]
     MESA_DIR = /home/jschwab/Software/mesa-r9793
@@ -30,6 +39,3 @@
 
 [r7624]
     MESA_DIR = /home/jschwab/Software/mesa-r7624
-
-[MR16]
-    MESA_DIR = /home/jschwab/Software/mesa-MR16
