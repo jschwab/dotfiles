@@ -1,7 +1,8 @@
 [general]
-accounts = personal, santacruz
+accounts = personal
 pythonfile = ~/.offlineimap.py
 maxsyncaccounts = 2
+socktimeout = 60
 
 ################################################################################
 
@@ -26,27 +27,5 @@ oauth2_refresh_token_eval = get_pass('Mail/jschwab@gmail.com-refresh_token')
 maxconnections = 2
 usecompression = yes
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+ssl_version=tls1_2
 
-################################################################################
-
-[Account santacruz]
-localrepository = santacruz-local
-remoterepository = santacruz-remote
-
-[Repository santacruz-local]
-type = Maildir
-localfolders = ~/Mail/santacruz
-
-[Repository santacruz-remote]
-type = Gmail
-remoteuser=jwschwab@ucsc.edu
-
-auth_mechanisms = XOAUTH2
-
-oauth2_client_id_eval = get_pass('Mail/jwschwab@ucsc.edu-client_id')
-oauth2_client_secret_eval = get_pass('Mail/jwschwab@ucsc.edu-client_secret')
-oauth2_refresh_token_eval = get_pass('Mail/jwschwab@ucsc.edu-refresh_token')
-
-maxconnections = 2
-usecompression = yes
-sslcacertfile = /etc/ssl/certs/ca-certificates.crt
